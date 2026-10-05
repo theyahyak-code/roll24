@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ROLL24 — a disposable camera that only opens after dark</title>
+<meta name="description" content="24 shots a night. No previews, no deletes, flash always on. Your roll develops at 9:00 the next morning. Join the waitlist.">
+<meta name="theme-color" content="#0B0B0C">
+<meta property="og:title" content="ROLL24 — opens after dark">
+<meta property="og:description" content="A disposable camera app. 24 shots a night. Develops at 9:00.">
+<meta property="og:image" content="og.png">
+<link rel="icon" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;600&family=VT323&display=swap" rel="stylesheet">
+<style>
+:root{
+  --body:#0B0B0C; --panel:#131315; --line:#26262A; --ink:#F2EEE3; --dim:rgba(242,238,227,.62);
+  --faint:rgba(242,238,227,.38); --amber:#FFB03A; --glow:rgba(255,122,26,.55); --teal:#37B58C; --lcd:#0D0A06;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--body);color:var(--ink)}
+body{font-family:'Archivo',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.brand{font-family:'Archivo Black',sans-serif;font-style:italic;transform:skewX(-6deg);display:inline-block;letter-spacing:.04em}
+.lcd{font-family:'VT323',monospace;color:var(--amber);text-shadow:0 0 14px var(--glow);background:var(--lcd);
+  border:2px solid var(--line);border-top-color:#000;border-left-color:#000;border-radius:10px}
+.label{font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:.28em;color:var(--faint);text-transform:uppercase}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+/* top plate */
+header{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink)}
+.logo .brand{font-size:24px}
+.logo .lcd{font-size:30px;line-height:30px;padding:0 8px}
+.lamp{display:flex;align-items:center;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1fr;gap:40px;padding:28px 0 56px;align-items:center}
+@media(min-width:900px){.hero{grid-template-columns:1.1fr .9fr;gap:64px;padding:56px 0 88px}}
+h1{font-family:'Archivo Black',sans-serif;font-size:clamp(40px,10vw,76px);line-height:.98;margin:14px 0 18px;letter-spacing:-.01em}
+h1 em{font-style:italic;color:var(--amber)}
+.sub{font-size:18px;line-height:1.55;color:var(--dim);max-width:520px;margin:0 0 28px}
+
+/* counter + form */
+.counter{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.counter .lcd{font-size:46px;line-height:42px;padding:2px 12px;min-width:120px;text-align:center}
+.counter p{margin:0;font-size:14px;line-height:1.4;color:var(--dim)}
+.counter b{color:var(--ink)}
+form{display:grid;gap:10px;max-width:520px}
+.field{display:grid;gap:6px}
+.field label{font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--dim)}
+input,select{font:inherit;font-size:17px;color:var(--ink);background:var(--panel);border:1.5px solid var(--line);
+  border-radius:10px;padding:14px 14px;width:100%;min-height:52px;appearance:none;-webkit-appearance:none}
+select{background-image:linear-gradient(45deg,transparent 50%,var(--dim) 50%),linear-gradient(135deg,var(--dim) 50%,transparent 50%);
+  background-position:calc(100% - 22px) 23px,calc(100% - 16px) 23px;background-size:6px 6px;background-repeat:no-repeat;padding-right:40px}
+input:focus,select:focus{outline:none;border-color:var(--amber);box-shadow:0 0 0 3px rgba(255,176,58,.18)}
+.row2{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:520px){.row2{grid-template-columns:1fr 1fr}}
+button{font-family:'Archivo Black',sans-serif;font-size:15px;letter-spacing:.18em;color:var(--body);background:var(--ink);
+  border:0;border-radius:999px;min-height:58px;cursor:pointer;margin-top:6px;box-shadow:inset 0 -5px 0 #C9C4B6;transition:transform .08s}
+button:active{transform:scale(.98)}
+button[disabled]{opacity:.6;cursor:default}
+.fine{font-size:12.5px;color:var(--faint);line-height:1.5;margin:4px 0 0}
+.msg{display:none;padding:16px;border-radius:12px;border:1.5px solid var(--line);background:var(--panel);font-size:15px;line-height:1.5}
+.msg.ok{display:block;border-color:var(--teal)}
+.msg.err{display:block;border-color:#FF6B5A}
+.msg b{font-family:'Archivo Black',sans-serif;letter-spacing:.08em}
+
+/* the camera */
+.cam{width:min(340px,86vw);margin:0 auto;background:var(--body);border:2px solid var(--line);border-radius:44px;padding:18px 12px 22px;
+  box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 8px #070708}
+.cam-top{display:flex;justify-content:space-between;align-items:center;padding:6px 10px 14px}
+.cam-top .brand{font-size:18px}
+.cam-top .lcd{font-size:24px;line-height:24px;padding:0 6px;border-radius:7px}
+.vf{aspect-ratio:3/4;border-radius:18px;border:2px solid var(--line);overflow:hidden;position:relative;
+  background:radial-gradient(120% 90% at 50% 38%,#4a3a2c 0%,#1b1512 45%,#050505 78%)}
+.vf::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 45% at 50% 40%,rgba(255,236,200,.28),transparent 70%)}
+.vf .stamp{position:absolute;right:14px;bottom:12px;font-family:'VT323',monospace;font-size:22px;color:var(--amber);text-shadow:0 0 8px #FF7A1A;z-index:1}
+.vf .closed{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;z-index:1;text-align:center}
+.vf .closed span{font-family:'Archivo Black',sans-serif;font-size:13px;letter-spacing:.25em;color:var(--ink)}
+.vf .closed small{color:var(--dim);font-size:13px}
+.cam-bottom{display:flex;align-items:center;justify-content:center;gap:22px;padding-top:20px}
+.ridges{display:flex;gap:5px}.ridges i{width:3px;height:30px;border-radius:2px;background:var(--panel);border:.5px solid var(--line)}
+.shutter{width:70px;height:70px;border-radius:50%;background:#C9C4B6;border:1px solid #000;display:flex;align-items:center;justify-content:center}
+.shutter::before{content:"";width:60px;height:60px;border-radius:50%;background:var(--ink);margin-bottom:4px}
+
+/* rules */
+section{padding:64px 0;border-top:1px solid var(--line)}
+h2{font-family:'Archivo Black',sans-serif;font-size:clamp(28px,6vw,44px);line-height:1.05;margin:10px 0 28px}
+.rules{display:grid;grid-template-columns:1fr;gap:0;counter-reset:r;border:1.5px solid var(--line);border-radius:18px;overflow:hidden}
+@media(min-width:700px){.rules{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:1000px){.rules{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.rule{display:flex;gap:16px;align-items:flex-start;padding:22px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);background:var(--panel)}
+.rule .n{font-family:'VT323',monospace;font-size:34px;line-height:28px;color:var(--amber);min-width:32px}
+.rule h3{margin:0 0 6px;font-family:'Archivo Black',sans-serif;font-size:16px;letter-spacing:.04em}
+.rule p{margin:0;color:var(--dim);font-size:14.5px;line-height:1.5}
+
+/* shared roll */
+.shared{display:grid;grid-template-columns:1fr;gap:32px;align-items:center}
+@media(min-width:900px){.shared{grid-template-columns:1fr 1fr;gap:64px}}
+.shared p{color:var(--dim);font-size:17px;line-height:1.6;margin:0 0 14px}
+.card{background:var(--panel);border:1.5px solid var(--line);border-radius:22px;padding:22px}
+.card .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.card .code{font-family:'VT323',monospace;font-size:38px;color:var(--amber);text-shadow:0 0 10px var(--glow);letter-spacing:.18em}
+.tot{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.tot div{text-align:center;padding:8px 0}
+.tot .lcd{display:block;font-size:38px;line-height:36px}
+.who{list-style:none;margin:0;padding:0}
+.who li{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);font-weight:600}
+.who li:last-child{border-bottom:0}
+.who .i{font-family:'VT323',monospace;color:rgba(255,176,58,.55);font-size:20px;width:24px}
+.who .c{margin-left:auto;font-family:'VT323',monospace;color:var(--amber);font-size:24px}
+.tag{font-family:'Archivo Black',sans-serif;font-size:8px;letter-spacing:.16em;border:1px solid var(--faint);color:var(--dim);padding:2px 5px}
+.tag.you{border-color:var(--teal);color:var(--teal)}
+
+/* final */
+.final{text-align:center}
+.final .sub{margin:0 auto 26px}
+.final a.cta{display:inline-flex;align-items:center;justify-content:center;font-family:'Archivo Black',sans-serif;font-size:15px;letter-spacing:.18em;
+  color:var(--body);background:var(--ink);border-radius:999px;min-height:58px;padding:0 34px;text-decoration:none;box-shadow:inset 0 -5px 0 #C9C4B6}
+footer{padding:30px 0 48px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;color:var(--faint);font-size:13px}
+footer a{color:var(--dim)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="logo" href="#" aria-label="ROLL24 home">
+      <span class="brand">ROLL</span><span class="lcd">24</span>
+    </a>
+    <div class="lamp"><span class="dot"></span><span class="label" id="lampText">Flash ready</span></div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div>
+        <span class="label">A disposable camera for your phone</span>
+        <h1>Only opens<br><em>after dark.</em></h1>
+        <p class="sub">24 shots a night. No previews, no deletes, flash always on. Your roll develops at 9:00 the next morning — and so does everyone else's.</p>
+
+        <div class="counter" aria-live="polite">
+          <span class="lcd" id="count">---</span>
+          <p><b>on the roll so far.</b><br>When the waitlist hits 100, it launches.</p>
+        </div>
+
+        <form id="join" novalidate>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required>
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label for="night">Next night out</label>
+              <select id="night" name="night" required>
+                <option value="" disabled selected>Pick one</option>
+                <option value="this-weekend">This weekend</option>
+                <option value="next-week">Next week</option>
+                <option value="this-month">This month</option>
+                <option value="not-sure">Not sure yet</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="city">City <span style="color:var(--faint)">(optional)</span></label>
+              <input id="city" name="city" type="text" autocomplete="address-level2" placeholder="Würzburg" maxlength="60">
+            </div>
+          </div>
+          <button type="submit" id="btn">SAVE MY SPOT</button>
+          <p class="fine">iPhone first. One email when it launches, nothing else.</p>
+          <div class="msg" id="msg" role="status"></div>
+        </form>
+      </div>
+
+      <div class="cam" aria-hidden="true">
+        <div class="cam-top"><span class="brand">ROLL</span><span class="lcd" id="camCount">24</span></div>
+        <div class="vf" id="vf">
+          <div class="closed" id="closed"><span>COMES OUT AFTER DARK</span><small>Opens at 20:00</small></div>
+          <div class="stamp" id="stamp"></div>
+        </div>
+        <div class="cam-bottom"><div class="ridges"><i></i><i></i><i></i><i></i><i></i></div><div class="shutter"></div><div class="ridges"><i></i><i></i><i></i><i></i><i></i></div></div>
+      </div>
+    </div>
+
+    <section>
+      <span class="label">The rules of the roll</span>
+      <h2>It's annoying on purpose.</h2>
+      <div class="rules">
+        <div class="rule"><span class="n">01</span><div><h3>Only after dark</h3><p>The lens opens at 20:00 and closes at 05:00. During the day, it won't even let you in.</p></div></div>
+        <div class="rule"><span class="n">02</span><div><h3>24 shots</h3><p>One roll per night. You'll stop taking the same photo twelve times.</p></div></div>
+        <div class="rule"><span class="n">03</span><div><h3>No preview</h3><p>You won't see what you shot. Look at the night, not your screen.</p></div></div>
+        <div class="rule"><span class="n">04</span><div><h3>No deletes</h3><p>The blurry one, the blink, the friend mid-sentence. They all stay.</p></div></div>
+        <div class="rule"><span class="n">05</span><div><h3>Flash on</h3><p>Hard, close, slightly too bright. The way disposables always looked.</p></div></div>
+        <div class="rule"><span class="n">06</span><div><h3>Develops at 9:00</h3><p>The next morning, the whole night shows up at once, with a date stamp in the corner.</p></div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="shared">
+        <div>
+          <span class="label">Shared rolls</span>
+          <h2>One roll.<br>Everyone's camera.</h2>
+          <p>Start a roll, show the code, and your friends scan in. Everyone keeps their own 24 shots, and at 9:00 you all wake up to the whole night, from every angle.</p>
+          <p>You see who's on the roll. You don't see a single photo until it develops.</p>
+        </div>
+        <div class="card" aria-label="Example of a shared roll card">
+          <div class="top"><span class="label">Shared roll</span><span class="code">Q82HZF</span></div>
+          <div class="tot">
+            <div><span class="lcd">04</span><span class="label">Cameras</span></div>
+            <div><span class="lcd">61</span><span class="label">Shots</span></div>
+          </div>
+          <ul class="who">
+            <li><span class="i">01</span>Lena <span class="tag">HOST</span><span class="c">21</span></li>
+            <li><span class="i">02</span>You <span class="tag you">YOU</span><span class="c">17</span></li>
+            <li><span class="i">03</span>Jonas<span class="c">14</span></li>
+            <li><span class="i">04</span>Mira<span class="c">09</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="final">
+      <span class="label">Launching at 100</span>
+      <h2>Get on the roll.</h2>
+      <p class="sub">It launches when 100 people want it. Save your spot, and bring your friends: a roll is better with more cameras.</p>
+      <a class="cta" href="#join" id="cta">SAVE MY SPOT</a>
+    </section>
+  </main>
+
+  <footer>
+    <span>ROLL24 · opens after dark</span>
+    <span>Emails are only used to tell you when ROLL24 launches.</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var URL = "https://flnvlewipsjglpuarcjn.supabase.co";
+  var KEY = "sb_publishable_6oHt2oVQrKsrlUz28HXy3Q_uxOefXxY";
+  var H = { "apikey": KEY, "Content-Type": "application/json" };
+
+  // where did this visitor come from? ?from=tiktok, ?from=poster ...
+  var params = new URLSearchParams(location.search);
+  var source = (params.get("from") || params.get("utm_source") || (document.referrer ? new URL(document.referrer).hostname : "direct"))
+    .toLowerCase().replace(/[^a-z0-9._-]/g, "").slice(0, 40) || "direct";
+
+  function pad(n) { return String(n).padStart(3, "0"); }
+
+  function loadCount() {
+    fetch(URL + "/rest/v1/rpc/waitlist_count", { method: "POST", headers: H, body: "{}" })
+      .then(function (r) { return r.json(); })
+      .then(function (n) {
+        n = Number(n) || 0;
+        document.getElementById("count").textContent = pad(n) + "/100";
+      })
+      .catch(function () { document.getElementById("count").textContent = "---"; });
+  }
+
+  // the camera mock follows the real rule: closed by day, open at night
+  (function () {
+    var h = new Date().getHours(), night = h >= 20 || h < 5;
+    document.getElementById("closed").style.display = night ? "none" : "flex";
+    document.getElementById("lampText").textContent = night ? "Lens open" : "Lens closed";
+    var d = new Date(), yy = String(d.getFullYear()).slice(2);
+    document.getElementById("stamp").textContent = night ? "'" + yy + " " + String(d.getMonth() + 1).padStart(2, "0") + " " + String(d.getDate()).padStart(2, "0") : "";
+  })();
+
+  var form = document.getElementById("join"), msg = document.getElementById("msg"), btn = document.getElementById("btn");
+  function show(kind, html) { msg.className = "msg " + kind; msg.innerHTML = html; }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var email = form.email.value.trim().toLowerCase();
+    var night = form.night.value;
+    var city = form.city.value.trim().slice(0, 60);
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { show("err", "That email doesn't look right."); form.email.focus(); return; }
+    if (!night) { show("err", "Pick when your next night out is."); form.night.focus(); return; }
+    btn.disabled = true; btn.textContent = "SAVING…";
+    fetch(URL + "/rest/v1/waitlist", {
+      method: "POST",
+      headers: Object.assign({ "Prefer": "return=minimal" }, H),
+      body: JSON.stringify({ email: email, next_night: night, city: city || null, source: source })
+    }).then(function (r) {
+      if (r.ok) {
+        show("ok", "<b>YOU'RE ON THE ROLL.</b><br>We'll email you once, when it launches. Send this page to the friends you go out with.");
+        form.reset(); loadCount();
+      } else if (r.status === 409) {
+        show("ok", "<b>ALREADY ON THE ROLL.</b><br>That email is saved. Send this page to a friend instead.");
+      } else {
+        show("err", "Something went wrong. Try again in a minute.");
+      }
+    }).catch(function () {
+      show("err", "No connection. Try again in a minute.");
+    }).finally(function () { btn.disabled = false; btn.textContent = "SAVE MY SPOT"; });
+  });
+
+  document.getElementById("cta").addEventListener("click", function (e) {
+    e.preventDefault();
+    document.getElementById("join").scrollIntoView({ behavior: "smooth", block: "center" });
+    setTimeout(function () { document.getElementById("email").focus(); }, 400);
+  });
+
+  loadCount();
+  setInterval(loadCount, 30000);
+})();
+</script>
+</body>
+</html>
