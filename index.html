@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>ROLL24 — a disposable camera that only opens after dark</title>
-<meta name="description" content="24 shots a night. No previews, no deletes, flash always on. Your roll develops at 9:00 the next morning. Join the waitlist.">
+<title>ROLL24 — a disposable camera on your phone</title>
+<meta name="description" content="A disposable camera on your phone. 24 shots. No previews. Your roll develops the next morning. Join the waitlist.">
 <meta name="theme-color" content="#0B0B0C">
-<meta property="og:title" content="ROLL24 — opens after dark">
-<meta property="og:description" content="A disposable camera app. 24 shots a night. Develops at 9:00.">
+<meta property="og:title" content="ROLL24 — a disposable camera on your phone">
+<meta property="og:description" content="24 shots. No previews. Develops tomorrow.">
 <meta property="og:image" content="og.png">
 <link rel="icon" href="icon.png">
 <link rel="apple-touch-icon" href="icon.png">
@@ -39,7 +39,7 @@ header{display:flex;justify-content:space-between;align-items:center;padding:22p
 /* hero */
 .hero{display:grid;grid-template-columns:1fr;gap:40px;padding:28px 0 56px;align-items:center}
 @media(min-width:900px){.hero{grid-template-columns:1.1fr .9fr;gap:64px;padding:56px 0 88px}}
-h1{font-family:'Archivo Black',sans-serif;font-size:clamp(40px,10vw,76px);line-height:.98;margin:14px 0 18px;letter-spacing:-.01em}
+h1{font-family:'Archivo Black',sans-serif;font-size:clamp(38px,9.5vw,64px);line-height:.98;margin:14px 0 18px;letter-spacing:-.01em}
 h1 em{font-style:italic;color:var(--amber)}
 .sub{font-size:18px;line-height:1.55;color:var(--dim);max-width:520px;margin:0 0 28px}
 
@@ -131,15 +131,15 @@ footer a{color:var(--dim)}
     <a class="logo" href="#" aria-label="ROLL24 home">
       <span class="brand">ROLL</span><span class="lcd">24</span>
     </a>
-    <div class="lamp"><span class="dot"></span><span class="label" id="lampText">Flash ready</span></div>
+    <div class="lamp"><span class="dot"></span><span class="label">Flash ready</span></div>
   </header>
 
   <main>
     <div class="hero">
       <div>
-        <span class="label">A disposable camera for your phone</span>
-        <h1>Only opens<br><em>after dark.</em></h1>
-        <p class="sub">24 shots a night. No previews, no deletes, flash always on. Your roll develops at 9:00 the next morning — and so does everyone else's.</p>
+        <span class="label">24 shots · No previews · Develops tomorrow</span>
+        <h1>A disposable camera<br><em>on your phone.</em></h1>
+        <p class="sub">Shoot your trip, your night out, your birthday. No checking, no retakes. When you finish the roll, it develops at 9:00 the next morning.</p>
 
         <div class="counter" aria-live="polite">
           <span class="lcd" id="count">---</span>
@@ -151,24 +151,12 @@ footer a{color:var(--dim)}
             <label for="email">Email</label>
             <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required>
           </div>
-          <div class="row2">
-            <div class="field">
-              <label for="night">Next night out</label>
-              <select id="night" name="night" required>
-                <option value="" disabled selected>Pick one</option>
-                <option value="this-weekend">This weekend</option>
-                <option value="next-week">Next week</option>
-                <option value="this-month">This month</option>
-                <option value="not-sure">Not sure yet</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="city">City <span style="color:var(--faint)">(optional)</span></label>
-              <input id="city" name="city" type="text" autocomplete="address-level2" placeholder="Würzburg" maxlength="60">
-            </div>
+          <div class="field">
+            <label for="city">City <span style="color:var(--faint)">(optional)</span></label>
+            <input id="city" name="city" type="text" autocomplete="address-level2" placeholder="Würzburg" maxlength="60">
           </div>
           <button type="submit" id="btn">SAVE MY SPOT</button>
-          <p class="fine">iPhone first. One email when it launches, nothing else.</p>
+          <p class="fine">Free for you and your friends. iPhone first. One email when it launches, nothing else.</p>
           <div class="msg" id="msg" role="status"></div>
         </form>
       </div>
@@ -176,7 +164,6 @@ footer a{color:var(--dim)}
       <div class="cam" aria-hidden="true">
         <div class="cam-top"><span class="brand">ROLL</span><span class="lcd" id="camCount">24</span></div>
         <div class="vf" id="vf">
-          <div class="closed" id="closed"><span>COMES OUT AFTER DARK</span><small>Opens at 20:00</small></div>
           <div class="stamp" id="stamp"></div>
         </div>
         <div class="cam-bottom"><div class="ridges"><i></i><i></i><i></i><i></i><i></i></div><div class="shutter"></div><div class="ridges"><i></i><i></i><i></i><i></i><i></i></div></div>
@@ -184,15 +171,15 @@ footer a{color:var(--dim)}
     </div>
 
     <section>
-      <span class="label">The rules of the roll</span>
-      <h2>It's annoying on purpose.</h2>
+      <span class="label">How it works</span>
+      <h2>Like the real thing.<br>On purpose.</h2>
       <div class="rules">
-        <div class="rule"><span class="n">01</span><div><h3>Only after dark</h3><p>The lens opens at 20:00 and closes at 05:00. During the day, it won't even let you in.</p></div></div>
-        <div class="rule"><span class="n">02</span><div><h3>24 shots</h3><p>One roll per night. You'll stop taking the same photo twelve times.</p></div></div>
-        <div class="rule"><span class="n">03</span><div><h3>No preview</h3><p>You won't see what you shot. Look at the night, not your screen.</p></div></div>
-        <div class="rule"><span class="n">04</span><div><h3>No deletes</h3><p>The blurry one, the blink, the friend mid-sentence. They all stay.</p></div></div>
-        <div class="rule"><span class="n">05</span><div><h3>Flash on</h3><p>Hard, close, slightly too bright. The way disposables always looked.</p></div></div>
-        <div class="rule"><span class="n">06</span><div><h3>Develops at 9:00</h3><p>The next morning, the whole night shows up at once, with a date stamp in the corner.</p></div></div>
+        <div class="rule"><span class="n">01</span><div><h3>24 shots</h3><p>One roll, 24 photos. A night, a weekend, a whole trip. You decide when it's done.</p></div></div>
+        <div class="rule"><span class="n">02</span><div><h3>No preview</h3><p>You won't see what you shot. Look at the moment, not your screen.</p></div></div>
+        <div class="rule"><span class="n">03</span><div><h3>No deletes</h3><p>The blurry one, the blink, the friend mid-sentence. They all stay.</p></div></div>
+        <div class="rule"><span class="n">04</span><div><h3>Develops tomorrow</h3><p>Finish the roll and it develops at 9:00 the next morning, film look and date stamp included.</p></div></div>
+        <div class="rule"><span class="n">05</span><div><h3>Every roll, kept</h3><p>Name it, write what happened, and it stays on your shelf: "Italy", "Lena's 25th", "Last night".</p></div></div>
+        <div class="rule"><span class="n">06</span><div><h3>Print it</h3><p>Turn any roll into an A4 contact sheet. Print it at home or at any photo kiosk.</p></div></div>
       </div>
     </section>
 
@@ -201,8 +188,8 @@ footer a{color:var(--dim)}
         <div>
           <span class="label">Shared rolls</span>
           <h2>One roll.<br>Everyone's camera.</h2>
-          <p>Start a roll, show the code, and your friends scan in. Everyone keeps their own 24 shots, and at 9:00 you all wake up to the whole night, from every angle.</p>
-          <p>You see who's on the roll. You don't see a single photo until it develops.</p>
+          <p>Start a roll, show the code, and your friends scan in. Everyone keeps their own 24 shots, and the next morning you all get the whole thing, from every angle.</p>
+          <p>You see who's on the roll. You don't see a single photo until it develops. Free with your friends.</p>
         </div>
         <div class="card" aria-label="Example of a shared roll card">
           <div class="top"><span class="label">Shared roll</span><span class="code">Q82HZF</span></div>
@@ -222,14 +209,14 @@ footer a{color:var(--dim)}
 
     <section class="final">
       <span class="label">Launching at 100</span>
-      <h2>Get on the roll.</h2>
+      <h2>Live it now.<br>See it tomorrow.</h2>
       <p class="sub">It launches when 100 people want it. Save your spot, and bring your friends: a roll is better with more cameras.</p>
       <a class="cta" href="#join" id="cta">SAVE MY SPOT</a>
     </section>
   </main>
 
   <footer>
-    <span>ROLL24 · opens after dark</span>
+    <span>ROLL24 · a disposable camera on your phone</span>
     <span>Emails are only used to tell you when ROLL24 launches.</span>
   </footer>
 </div>
@@ -257,13 +244,10 @@ footer a{color:var(--dim)}
       .catch(function () { document.getElementById("count").textContent = "---"; });
   }
 
-  // the camera mock follows the real rule: closed by day, open at night
+  // date stamp on the camera mock, like the corner of a disposable print
   (function () {
-    var h = new Date().getHours(), night = h >= 20 || h < 5;
-    document.getElementById("closed").style.display = night ? "none" : "flex";
-    document.getElementById("lampText").textContent = night ? "Lens open" : "Lens closed";
     var d = new Date(), yy = String(d.getFullYear()).slice(2);
-    document.getElementById("stamp").textContent = night ? "'" + yy + " " + String(d.getMonth() + 1).padStart(2, "0") + " " + String(d.getDate()).padStart(2, "0") : "";
+    document.getElementById("stamp").textContent = "'" + yy + " " + String(d.getMonth() + 1).padStart(2, "0") + " " + String(d.getDate()).padStart(2, "0");
   })();
 
   var form = document.getElementById("join"), msg = document.getElementById("msg"), btn = document.getElementById("btn");
@@ -272,18 +256,16 @@ footer a{color:var(--dim)}
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     var email = form.email.value.trim().toLowerCase();
-    var night = form.night.value;
     var city = form.city.value.trim().slice(0, 60);
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { show("err", "That email doesn't look right."); form.email.focus(); return; }
-    if (!night) { show("err", "Pick when your next night out is."); form.night.focus(); return; }
     btn.disabled = true; btn.textContent = "SAVING…";
     fetch(URL + "/rest/v1/waitlist", {
       method: "POST",
       headers: Object.assign({ "Prefer": "return=minimal" }, H),
-      body: JSON.stringify({ email: email, next_night: night, city: city || null, source: source })
+      body: JSON.stringify({ email: email, city: city || null, source: source })
     }).then(function (r) {
       if (r.ok) {
-        show("ok", "<b>YOU'RE ON THE ROLL.</b><br>We'll email you once, when it launches. Send this page to the friends you go out with.");
+        show("ok", "<b>YOU'RE ON THE ROLL.</b><br>We'll email you once, when it launches. Send this page to the friends you'd share a roll with.");
         form.reset(); loadCount();
       } else if (r.status === 409) {
         show("ok", "<b>ALREADY ON THE ROLL.</b><br>That email is saved. Send this page to a friend instead.");
